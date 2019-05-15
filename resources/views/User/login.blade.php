@@ -13,7 +13,7 @@
            @csrf
            用户<input type="text" name="name"><br>
            密码<input type="password" name="password"><br>
-           <input type="submit" value="登录">
+           <input type="submit" value="登录a">
        </form>
 </body>
 </html>
