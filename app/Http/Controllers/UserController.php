@@ -103,14 +103,14 @@ class UserController extends Controller
         if($a){
             $res = [
                 'errno'=>'0',
-                'msg'=>'OK',
+                'msg'=>'个人中心',
                 'data'=>$a
             ];
             die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }else{
             $res = [
                 'errno'=>'50006',
-                'msg'=>'数据异常',
+                'msg'=>'验证失败',
             ];
             die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }
