@@ -99,7 +99,7 @@ class UserController extends Controller
         $data = base64_decode($data);
         $decrypted = openssl_decrypt($data, $method, $key, $option, $iv);
         $data = json_decode($decrypted,JSON_UNESCAPED_UNICODE);
-    	$a = User::where(['id'=>$data])->first();
+    	$a = User::where(['id'=>$data['id']])->first();
         if($a){
             $res = [
                 'errno'=>'0',
