@@ -42,7 +42,7 @@ Route::post('/User/login', 'UserController@login');
 Route::get('/test','PayController@test');//测试
 Route::get('/pay/alipay/pay/{order_id}','PayController@pay');
 Route::post('/pay/alipay/pay/notify', 'PayController@notify');       //支付宝异步通知
-Route::get('/pay/alipay/pay/return', 'PayController@aliReturn');       //支付宝同步通知
+Route::get('/pay/alipay/pay/aliReturn', 'PayController@aliReturn');       //支付宝同步通知
 
 
 
