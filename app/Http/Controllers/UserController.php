@@ -88,7 +88,6 @@ class UserController extends Controller
         }
         die(json_encode($res,JSON_UNESCAPED_UNICODE));
     }
-
     //app个人中心
     public function user(Request $request){
     	$data = file_get_contents("php://input");
