@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Model\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,19 +30,19 @@ class PayController extends Controller
     }
     //查询订单
     public function pay($order_id){
-        $res = DB::table('user_order')->where(['order_id'=>$order_id])->first();
-        if($res->pay_status>1){
+        $res = Order::where(['order_id'=>$order_id])->first()->toArray();
+        if($res['pay_status']>1){
             die("订单已支付，请勿重复支付");
         }
         //判断订单是否已被删除
-        if($res->status==2){
+        if($res['status']==2){
             die("订单已被删除，无法支付");
         }
         //业务参数
         $bizcont = [
             'subject'           => 'Lening-Order: '.$order_id,
             'out_trade_no'      => $order_id,
-            'total_amount'      => $res->order_amount / 100,
+            'total_amount'      => $res['order_amount']  / 100,
             'product_code'      => 'QUICK_WAP_WAY',
         ];
         //公共参数
