@@ -31,6 +31,7 @@ class PayController extends Controller
     //查询订单
     public function pay($order_id){
         $res = Order::where(['order_id'=>$order_id])->first()->toArray();
+//        var_dump($res);die;
         if($res['pay_status']>1){
             die("订单已支付，请勿重复支付");
         }
