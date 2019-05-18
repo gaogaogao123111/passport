@@ -17,7 +17,7 @@ class PayController extends Controller
     {
         $this->app_id = env('APPID');
         $this->gate_way = 'https://openapi.alipaydev.com/gateway.do';
-        $this->notify_url = 'http://gxd.chenyys.com/pay/alipay/notify';
+        $this->notify_url = 'http://gxd.chenyys.com/pay/notify';
         $this->return_url = 'http://gxd.chenyys.com/pay/alipay/aliReturn';
         $this->rsaPrivateKeyFilePath = storage_path('app/ali/private.pay');    //应用私钥
         $this->aliPubKey = storage_path('app/ali/zhifu.pay'); //支付宝公钥
