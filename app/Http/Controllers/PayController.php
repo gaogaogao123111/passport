@@ -17,8 +17,8 @@ class PayController extends Controller
     {
         $this->app_id = env('APPID');
         $this->gate_way = 'https://openapi.alipaydev.com/gateway.do';
-        $this->notify_url = env('http://passport.1809.com/pay/alipay/pay/notify');
-        $this->return_url = env('http://passport.1809.com/pay/alipay/pay/return');
+        $this->notify_url = 'http://passport.1809.com/pay/alipay/pay/notify';
+        $this->return_url = 'http://passport.1809.com/pay/alipay/pay/return';
         $this->rsaPrivateKeyFilePath = storage_path('app/ali/private.pay');    //应用私钥
         $this->aliPubKey = storage_path('app/ali/zhifu.pay'); //支付宝公钥
     }
@@ -126,20 +126,16 @@ class PayController extends Controller
         }
         return $data;
     }
-    /**
-     * 支付宝异步通知
-     */
+    //支付宝异步通知
     public function notify()
     {
         $p = json_encode($_POST);
         $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
-        file_put_contents('logs/alipay_notify',$log_str,FILE_APPEND);
+        file_put_contents('logs/notify.log',$log_str,FILE_APPEND);
         echo 'success';
         //TODO 验签 更新订单状态
     }
-    /**
-     * 支付宝同步通知
-     */
+    //支付宝同步通知
     public function aliReturn()
     {
         echo '<pre>';print_r($_GET);echo '</pre>';
