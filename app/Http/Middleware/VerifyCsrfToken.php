@@ -23,7 +23,8 @@ class VerifyCsrfToken extends Middleware
         '/Api/apitestadd',
         '/User/*',
          '/Goods',
-        '/Goods/*'
+        '/Goods/*',
+        '/pay/notify'
 
 
     ];
