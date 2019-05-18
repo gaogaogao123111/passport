@@ -17,8 +17,8 @@ class PayController extends Controller
     {
         $this->app_id = env('APPID');
         $this->gate_way = 'https://openapi.alipaydev.com/gateway.do';
-        $this->notify_url = 'http://gxd.chenyys.com/pay/alipay/pay/notify';
-        $this->return_url = 'http://gxd.chenyys.com/pay/alipay/pay/aliReturn';
+        $this->notify_url = 'http://gxd.chenyys.com/pay/alipay/notify';
+        $this->return_url = 'http://gxd.chenyys.com/pay/alipay/aliReturn';
         $this->rsaPrivateKeyFilePath = storage_path('app/ali/private.pay');    //应用私钥
         $this->aliPubKey = storage_path('app/ali/zhifu.pay'); //支付宝公钥
     }
@@ -30,7 +30,8 @@ class PayController extends Controller
     }
     //查询订单
     public function pay($order_id){
-        $res = Order::where(['order_id'=>$order_id])->first()->toArray();
+        $res = Order::where(['order_id'=>$order_id])->first();
+//        var_dump($res);die;
         if($res['pay_status']>1){
             die("订单已支付，请勿重复支付");
         }
@@ -138,7 +139,6 @@ class PayController extends Controller
     //支付宝同步通知
     public function aliReturn()
     {
-//        echo "<pre>";echo $_GET;echo "</pre>";
-        echo 1;
+        echo "<pre>";print_r($_GET);echo "</pre>";
     }
 }
