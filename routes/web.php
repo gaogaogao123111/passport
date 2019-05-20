@@ -46,4 +46,17 @@ Route::get('/pay/alipay/aliReturn', 'PayController@aliReturn');       //支付�
 
 
 
+//api
+Route::get('/Api/apireg','ApiController@apireg');
+Route::post('/Api/apiregadd','ApiController@apiregadd');
+Route::get('/Api/apilist','ApiController@apilist');
+
+
+
+
+
+
+
+
+
 

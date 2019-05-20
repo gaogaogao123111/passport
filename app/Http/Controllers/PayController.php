@@ -133,8 +133,9 @@ class PayController extends Controller
         $p = json_encode($_POST);
         $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
         file_put_contents('logs/notify.log',$log_str,FILE_APPEND);
-        echo 'success';
         //TODO 验签 更新订单状态
+
+
     }
     //支付宝同步通知
     public function aliReturn()
