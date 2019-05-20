@@ -20,7 +20,7 @@
         </tr>
     @foreach($info as $k=>$info)
         <tr id="{{$info['api_id']}}">
-            <td ><a href="/admin/Api/token/?api_id={{$info['api_id']}}">{{$info['api_id']}}</a></td>
+            <td ><a href="/admin/Api/token/?api_id={{$info['api_id']}}">获取&nbsp;&nbsp;&nbsp;{{$info['api_id']}}&nbsp;&nbsp;&nbsp;信息</a></td>
             <td>{{$info['api_name']}}</td>
             <td>{{$info['api_home']}}</td>
             <td>{{$info['api_shui']}}</td>
