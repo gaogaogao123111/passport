@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 class ApiController extends Controller
 {
-    //审核猎豹
     public function apilist(){
         $res = DB::table('api')->get();
         $info = json_encode($res);
@@ -15,7 +14,6 @@ class ApiController extends Controller
         return view('/Api/apilist',compact('info'));
 
     }
-    //审核执行
     public function gocheck(Request $request){
         $data = $request->input();
         $v = DB::table('api')->where(['api_id'=>$data['id']])->update(['status'=>1]);
@@ -27,8 +25,6 @@ class ApiController extends Controller
                 'key'=>$key
             ];
             DB::table('api')->where(['api_id'=>$data])->update($vv);
-            $rediskey = 'appid:key:token'.$appid;
-            Redis::set($rediskey,$appid.$key);
             $res = [
                 'error'=>0,
                 'msg'=>'审核成功'
@@ -42,28 +38,11 @@ class ApiController extends Controller
             die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }
     }
-    //验证token
+    //获取token
     public function token(Request $request){
         $api_id = $_GET['api_id'];
+        $key= $_GET['key'];
         $data= DB::table('api')->where(['api_id'=>$api_id])->first();
-        if($data->status==2){
-            $res = [
-                'error'=>50105,
-                'msg'=>'该企业未审核'
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }
-        $v = 'num';
-        $b = Redis::incr($v);
-        if($b>=10){
-            $res = [
-                'error'=>50101,
-                'msg'=>'次数限制'
-            ];
-            die(json_encode($res,JSON_UNESCAPED_UNICODE));
-        }
-        echo "次数：".$b;echo "<br>";
-        Redis::expire($v,5);
         if(empty($data)){
             $res = [
                 'error'=>50001,
@@ -71,26 +50,91 @@ class ApiController extends Controller
             ];
             die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }
-        $key= 'appid:key:token'.$data->appid;
-        $a = Redis::get($key);
-        if($data->appid==$a){
+        if($data->key!=$key){
+            $res = [
+                'error'=>50105,
+                'msg'=>'key不匹配'
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }
+        $token = Str::random(5).rand(5,10);
+        $rediskey = 'appid:key:token'.$data->appid;
+        $token_key = 'token:sadd';
+        Redis::set($rediskey,$token);
+        $a = Redis::Sadd($token_key,$token);
+        if($a){
             $res = [
                 'error'=>0,
-                'msg'=>'token能行',
-                'data'=>$data,
-                'token'=>$a,
-                'IP'=>$_SERVER['REMOTE_ADDR'],
-                'UA'=>$_SERVER['HTTP_USER_AGENT']
+                'msg'=>'获取token成功',
+                'token'=>$token,
             ];
             die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }else{
             $res = [
                 'error'=>50012,
-                'msg'=>'token无效',
+                'msg'=>'获取token失败',
             ];
             die(json_encode($res,JSON_UNESCAPED_UNICODE));
         }
 
+    }
+    //获取IP
+    public function ip(Request $request){
+        $appid = $request->input('appid');
+        $data= DB::table('api')->where(['appid'=>$appid])->first();
+        if($data){
+            $res = [
+                'error'=>0,
+                'msg'=>'ip',
+                'data'=>$_SERVER['REMOTE_ADDR']
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }else{
+            $res = [
+                'error'=>40010,
+                'msg'=>'无效的ID',
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }
+
+    }
+    //获取UA
+    public function ua(Request $request){
+        $appid = $request->input('appid');
+        $data= DB::table('api')->where(['appid'=>$appid])->first();
+        if($data){
+            $res = [
+                'error'=>0,
+                'msg'=>'UA',
+                'data'=>$_SERVER['HTTP_USER_AGENT']
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }else{
+            $res = [
+                'error'=>40010,
+                'msg'=>'无效的ID',
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }
+    }
+    //获取注册信息
+    public function reguser(Request $request){
+        $appid = $request->input('appid');
+        $data= DB::table('api')->where(['appid'=>$appid])->first();
+        if($data){
+            $res = [
+                'error'=>0,
+                'msg'=>'注册信息',
+                'data'=>$data
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }else{
+            $res = [
+                'error'=>40010,
+                'msg'=>'无效的ID',
+            ];
+            die(json_encode($res,JSON_UNESCAPED_UNICODE));
+        }
     }
 }
 

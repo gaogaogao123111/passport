@@ -13,6 +13,7 @@
         <tr>
             <td>ID</td>
             <td>企业</td>
+            <td>执照</td>
             <td>法人</td>
             <td>税务号</td>
             <td>对应公众号</td>
@@ -20,15 +21,19 @@
         </tr>
     @foreach($info as $k=>$info)
         <tr id="{{$info['api_id']}}">
-            <td ><a href="/admin/Api/token/?api_id={{$info['api_id']}}">获取&nbsp;&nbsp;&nbsp;{{$info['api_id']}}&nbsp;&nbsp;&nbsp;信息</a></td>
+            <td >{{$info['api_id']}}</td>
             <td>{{$info['api_name']}}</td>
+            <td><img src="http://passport.1809.com/api_img/{{$info['api_img']}}"></td>
             <td>{{$info['api_home']}}</td>
             <td>{{$info['api_shui']}}</td>
             <td>{{$info['api_zh']}}</td>
             @if($info['status']==1)
                 <td>已审核</td>
             @else
-                <td><button class="btn">审核</button></td>
+                <td>
+                    <button class="btn">审核</button>
+                    <button><a href="/admin/Api/del/?api_id={{$info['api_id']}}">撤回</a></button>
+                </td>
             @endif
         </tr>
     @endforeach

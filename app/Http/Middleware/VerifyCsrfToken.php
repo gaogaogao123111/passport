@@ -25,7 +25,7 @@ class VerifyCsrfToken extends Middleware
          '/Goods',
         '/Goods/*',
         '/pay/notify',
-        '/Api/apiregadd',
+        '/Api/*',
         '/admin/Api/gocheck'
 
 

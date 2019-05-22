@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\Api10times;
+use App\Http\Middleware\Check;
+use App\Http\Middleware\Stoken;
 use App\Http\Middleware\User;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -64,6 +66,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'api10times'=>Api10times::class,
         'user'=>User::class,
+        'check'=>Check::class,
+        'stoken'=>Stoken::class,
+
+
 
     ];
 

@@ -51,6 +51,7 @@ Route::get('/Api/apireg','ApiController@apireg');
 Route::post('/Api/apiregadd','ApiController@apiregadd');
 Route::get('/Api/apilist','ApiController@apilist');
 
+Route::get('/Api/apiuser','ApiController@apiuser');
 
 
 
@@ -60,3 +61,10 @@ Route::get('/Api/apilist','ApiController@apilist');
 
 
 
+
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

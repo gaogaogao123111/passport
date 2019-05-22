@@ -8,29 +8,56 @@
     <title>Document</title>
 </head>
 <body>
-<form action="/Api/apiregadd" method="post">
-    <h3>api   注册</h3>
+    <h3>企业   注册</h3>
+    <form action="/Api/apiregadd" method="post" enctype="multipart/form-data">
     <table border="1">
         <tr>
             <td>企业名称：</td>
-            <td><input type="text" name="api_name"></td>
+            <td><input type="text" id="api_name" name="api_name"></td>
         </tr>
         <tr>
             <td>法人：</td>
-            <td><input type="text" name="api_home"></td>
+            <td><input type="text" id="api_home" name="api_home"></td>
         </tr>
         <tr>
             <td>税务号：</td>
-            <td><input type="text" name="api_shui"></td>
+            <td><input type="text" id="api_shui" name="api_shui"></td>
         </tr>
         <tr>
             <td>对应公众号：</td>
-            <td><input type="text" name="api_zh"></td>
+            <td><input type="text" id="api_zh" name="api_zh"></td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><input type="submit" value="注册"></td>
+            <td>执照：</td>
+            <td><input type="file" id="api_zh" name="api_img"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><button class="btn">注册</button></td>
         </tr>
     </table>
-</form>
+    </form>
 </body>
 </html>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script>
+    //     $('.btn').click(function(){
+    //         var api_name =$('#api_name').val();
+    //         var api_home =$('#api_home').val();
+    //         var api_shui =$('#api_shui').val();
+    //         var api_zh =$('#api_zh').val();
+    //         $.post(
+    //             '/Api/apiregadd',
+    //
+    //             {api_name:api_name,api_home:api_home,api_shui:api_shui,api_zh:api_zh},
+    //             function(data){
+    //                 if(data.error==0){
+    //                     window.confirm(data.msg);
+    //                     window.location="/Api/apiuser?api_name="+data['api_name'];
+    //                 }else{
+    //                     alert(data.msg);
+    //                 }
+    //             },
+    //             'json'
+    //         );
+    // })
+</script>
